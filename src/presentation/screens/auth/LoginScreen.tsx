@@ -1,19 +1,37 @@
-import React from 'react';
-import { useWindowDimensions } from 'react-native'
+import React, { useState } from 'react';
+import { Alert, useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Input, Layout, Text, Button } from '@ui-kitten/components';
 import { CustomIcon } from '../../components/ui/CustomIcon';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNav';
 
-import  {STAGE,API_URL} from '@env'
+import { useAuthStore } from '../../store/auth/useAuth.store';
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {
 }
 
 export const LoginScreen = ({ navigation }: Props) => {
     const { height } = useWindowDimensions();
-    console.log(API_URL,STAGE);
-    
+    const { login } = useAuthStore();
+    const [isLoading, setIsLoading] = useState(false)
+    const [form, setForm] = useState({ email: '', password: '' });
+
+    const onLogin = async () => {
+        
+        if (form.email.length === 0 && form.password.length === 0) {
+
+            return;
+        }
+        setIsLoading(true);
+        const isSuccess = await login(form.email, form.password);
+        setIsLoading(false);
+        console.log(isSuccess)
+        if (!isSuccess) {
+            Alert.alert("Error", "Invalid user")
+            //    navigation.navigate('HomeScreen');
+        }
+    }
+
     return (
         <Layout style={{ flex: 1 }}>
             <ScrollView style={{ marginHorizontal: 40 }} >
@@ -23,23 +41,27 @@ export const LoginScreen = ({ navigation }: Props) => {
                 </Layout>
                 <Layout style={{ marginTop: 20 }}>
                     <Input
+                        value={form.email}
+                        onChangeText={email => setForm({ ...form, email })}
                         accessoryLeft={<CustomIcon name='email-outline'></CustomIcon>}
                         keyboardType='email-address'
                         autoCapitalize='none'
                         placeholder='Correo electrónico' style={{ marginBottom: 10 }}></Input>
 
                     <Input
+                        value={form.password}
+                        onChangeText={password => setForm({ ...form, password })}
                         accessoryLeft={<CustomIcon name='lock'></CustomIcon>}
                         secureTextEntry={true}
                         autoCapitalize='none'
                         placeholder='Password' style={{ marginBottom: 10 }}></Input>
-
                 </Layout>
                 <Layout style={{ height: 20 }}></Layout>
                 <Layout>
                     <Button
+                    disabled={isLoading}
                         accessoryRight={<CustomIcon white name="arrow-forward-outline"></CustomIcon>}
-                        onPress={() => { }}    >
+                        onPress={onLogin}    >
                         Ingresar
                     </Button>
                 </Layout>

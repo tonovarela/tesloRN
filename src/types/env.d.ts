@@ -1,4 +1,4 @@
-import { API_URL } from '@env';
+
 declare module '@env' {
     export const API_URL: string;
     export const STAGE:string;
