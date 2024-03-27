@@ -28,8 +28,7 @@ const cardStyleInterpolator: StackCardStyleInterpolator = ({ current }) => {
 export const StackNav = () => {
     return (
         <Stack.Navigator
-            initialRouteName='LoginScreen'
-
+            initialRouteName='LoadingScreen'
             screenOptions={
                 {
                     cardStyleInterpolator,

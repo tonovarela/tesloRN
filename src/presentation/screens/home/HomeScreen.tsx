@@ -1,16 +1,21 @@
 import { Button, Icon, Layout } from '@ui-kitten/components';
 import React from 'react';
-import { StyleSheet } from 'react-native'
+import { useAuthStore } from '../../store/auth/useAuth.store';
+
 
 export const HomeScreen = () => {
+    const { logout } = useAuthStore();
+    const closeSesion = async () => {
+        await logout();
+
+    }
     return (
-        <Layout style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Button
-            accessoryLeft={<Icon                            
-                name='arrow-circle-left-outline'
-            />}
+                onPress={closeSesion}
+                accessoryLeft={<Icon name='log-out-outline'/>}
             >Cerrar sesión</Button>
-            
+
         </Layout>
     )
 }

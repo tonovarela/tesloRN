@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, useWindowDimensions } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { Input, Layout, Text, Button } from '@ui-kitten/components';
@@ -7,6 +7,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../navigation/StackNav';
 
 import { useAuthStore } from '../../store/auth/useAuth.store';
+
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {
 }
 
@@ -15,11 +16,9 @@ export const LoginScreen = ({ navigation }: Props) => {
     const { login } = useAuthStore();
     const [isLoading, setIsLoading] = useState(false)
     const [form, setForm] = useState({ email: '', password: '' });
-
-    const onLogin = async () => {
-        
+    
+    const onLogin = async () => {        
         if (form.email.length === 0 && form.password.length === 0) {
-
             return;
         }
         setIsLoading(true);
@@ -68,7 +67,10 @@ export const LoginScreen = ({ navigation }: Props) => {
                 <Layout style={{ height: 50 }}></Layout>
                 <Layout style={{ alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
                     <Text>¿No tienes una cuenta?</Text>
-                    <Text status='primary' category='s1' onPress={() => { navigation.navigate('RegisterScreen') }}> Crea una</Text>
+                    <Text status='primary' category='s1' onPress={() => { 
+                        if (isLoading) return;
+                        navigation.navigate('RegisterScreen')
+                         }}> Crea una</Text>
                 </Layout>
             </ScrollView>
         </Layout>
