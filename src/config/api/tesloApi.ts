@@ -6,8 +6,7 @@ import { Platform } from "react-native";
 export const API_URL = (STAGE === "prod") ? PRODURL :
     Platform.OS === "android"
         ? API_URL_ANDROID
-        : API_URL_IOS;
-
+        : API_URL_IOS;        
 const tesloApi = axios.create({
     baseURL: API_URL,
     headers: {

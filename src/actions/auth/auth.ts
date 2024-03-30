@@ -19,8 +19,8 @@ const toUserToken = (data: AuthResponse) => {
     }
 }
 
-export const checkToken = async () => {
-
+export const checkToken = async () => {    
+    console.log(tesloApi.defaults.baseURL)
     try {
         const { data } = await tesloApi.get<AuthResponse>("/auth/check-status");
         return toUserToken(data);
@@ -30,7 +30,7 @@ export const checkToken = async () => {
 }
 
 export const authLogin = async (email: string, password: string) => {
-    email = email.toLowerCase();
+    email = email.toLowerCase();    
     try {
         const { data } = await tesloApi.post<AuthResponse>("/auth/login", { email, password });
         return toUserToken(data);
