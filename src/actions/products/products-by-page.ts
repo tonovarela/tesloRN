@@ -14,3 +14,4 @@ export const getProductsByPage = async (page: number, limit=20) : Promise<Produc
      return [];
     }
 }
+

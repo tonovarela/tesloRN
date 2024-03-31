@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Product } from '../../../domain/entities/products.entity';
 import { Layout, List } from '@ui-kitten/components';
 import { ProductCard } from './ProductCars';
+import { RefreshControl } from 'react-native';
 
-interface Props  {
-    products:Product[],
+interface Props {
+    products: Product[],
+    fetchNextPage: () => void
     // siguente pagina MAs productos
 }
-export const ProductList= ({products}:Props) => {
-return (
-    <List
-    data={products}
-    numColumns={2}
-    keyExtractor={(p,index)=>`${p.id}-${index}`}
-    renderItem={({item})=><ProductCard product={item}></ProductCard>}
-    ListFooterComponent={()=><Layout style={{height:150}}></Layout>}
-    >
-    </List>
+export const ProductList = ({ products, fetchNextPage }: Props) => {
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
-)
+
+    const onPulltoRefresh = async () => {
+        setIsRefreshing(true)
+        await fetchNextPage()
+        setIsRefreshing(false)
+    }
+    return (
+        <List
+           refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onPulltoRefresh}></RefreshControl>}
+            data={products}
+            numColumns={2}
+            onEndReachedThreshold={0.8}
+            onEndReached={fetchNextPage}
+            keyExtractor={(p, index) => `${p.id}-${index}`}
+            renderItem={({ item }) => <ProductCard product={item}></ProductCard>}
+            ListFooterComponent={() => <Layout style={{ height: 150 }}></Layout>}
+        >
+        </List>
+
+    )
 }
