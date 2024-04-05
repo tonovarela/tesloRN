@@ -19,12 +19,15 @@ const toUserToken = (data: AuthResponse) => {
     }
 }
 
-export const checkToken = async () => {    
-    console.log(tesloApi.defaults.baseURL)
+export const checkToken = async () => {        
     try {
-        const { data } = await tesloApi.get<AuthResponse>("/auth/check-status");
+        const response = await tesloApi.get<AuthResponse>("/auth/check-status");        
+        const  {data} = response
+        
         return toUserToken(data);
+
     } catch (error) {
+        
         return null;
     }
 }
@@ -34,7 +37,8 @@ export const authLogin = async (email: string, password: string) => {
     try {
         const { data } = await tesloApi.post<AuthResponse>("/auth/login", { email, password });
         return toUserToken(data);
-    } catch (error) {        
+    } catch (error) {  
+        
         return null;
     }
 }
@@ -45,7 +49,7 @@ export const register = async (email: string, password: string, fullName: string
         const resp = await tesloApi.post<AuthResponse>("/auth/register", { email, password, fullName });        
         return toUserToken(resp.data);
     } catch (error) {
-        console.log(error);
+        
         return null;
     }
 }

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: Props) => {
     }, []);
 
     useEffect(() => {
-
+     
         switch (status) {
             case 'authenticated':
                 navigation.reset({ index: 0, routes: [{ name: 'HomeScreen' }] });

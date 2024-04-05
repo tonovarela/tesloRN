@@ -16,8 +16,8 @@ const tesloApi = axios.create({
 
 
 tesloApi.interceptors.request.use(async (config) => {
-    const token = await AsyncStorage.getItem("token");        
-    if (token) {
+    const token = await AsyncStorage.getItem("token");       
+    if (token) {        
         config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
