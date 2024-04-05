@@ -1,1 +1,7 @@
-export type  AuthStatus = "authenticated" | "unauthenticated" | "checking";
+
+
+export enum AuthStatus  {
+    AUTHENTICATED = "authenticated",
+    UNAUTHENTICATED = "unauthenticated",
+    CHECKING = "checking"
+}

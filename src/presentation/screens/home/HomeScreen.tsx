@@ -2,13 +2,14 @@ import React from 'react';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { getProductsByPage } from '../../../actions/products/products-by-page';
+
 import { MainLayout } from '../../navigation/MainLayout';
 import { FullScreenLoader } from '../../components/ui/FullScreenLoader';
 import { ProductList } from '../../components/products/ProductList';
 import { FAB } from '../../components/products/FAB';
 
 import { RootStackParams } from '../../navigation/StackNav';
+import { getProductsByPage } from '../../../actions/products';
 
 
 export const HomeScreen = () => {

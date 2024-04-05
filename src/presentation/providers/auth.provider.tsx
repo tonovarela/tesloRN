@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParams } from '../navigation/StackNav';
 import { PropsWithChildren, useEffect } from 'react';
 import { useAuthStore } from '../store/auth/useAuth.store';
+import { AuthStatus } from '../../infrastructure/interfaces/auth.estatus';
 
 interface Props extends PropsWithChildren {
 }
@@ -15,20 +16,20 @@ export const AuthProvider = ({ children }: Props) => {
     }, []);
 
     useEffect(() => {
-     
+
         switch (status) {
-            case 'authenticated':
+            case AuthStatus.AUTHENTICATED:
                 navigation.reset({ index: 0, routes: [{ name: 'HomeScreen' }] });
                 break;
-            case 'unauthenticated':
+            case AuthStatus.UNAUTHENTICATED:
                 navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }] });
                 break;
-            case 'checking':
+            case AuthStatus.CHECKING:
                 console.log('checking...');
                 break;
             default:
                 break;
-        }        
+        }
 
     }, [status])
     return (
