@@ -56,6 +56,7 @@ export const ProductScreen = ({ route }: Props) => {
                 ({ handleChange, handleSubmit, values, errors, setFieldValue }) => (
                     <ProductForm
                         product={values}
+                        
                         handleSubmit={handleSubmit} 
                         handleChange={handleChange}
                         isSaving={mutation.isPending}
