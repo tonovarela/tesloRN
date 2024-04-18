@@ -13,6 +13,7 @@ import { getProductById, updateCreateProduct } from '../../../actions/products';
 import { ProductForm } from '../../components/products/ProductForm';
 import { Product } from '../../../domain/entities/products.entity';
 import { Text } from '@ui-kitten/components';
+import { CameraAdapter } from '../../../config/api/adapter/CameraAdapter';
 
 
 interface Props extends StackScreenProps<RootStackParams, 'ProductScreen'> { }
@@ -48,6 +49,8 @@ export const ProductScreen = ({ route }: Props) => {
             </MainLayout>
         )
     }
+
+   
     return (
         <Formik
             initialValues={product}

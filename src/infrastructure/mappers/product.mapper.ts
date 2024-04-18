@@ -3,7 +3,8 @@ import { Product } from "../../domain/entities/products.entity";
 import { TesloProducts } from "../interfaces/produtcts.response";
 
 export class ProductMapper {
-    static tesloProductToEntity(tesloProduct: TesloProducts): Product {
+    static tesloProductToEntity(tesloProduct: TesloProducts): Product {        
+        
         return {
             id:          tesloProduct.id,
             title:       tesloProduct.title,

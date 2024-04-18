@@ -15,7 +15,7 @@ export const LoginScreen = ({ navigation }: Props) => {
     const { height } = useWindowDimensions();
     const { login } = useAuthStore();
     const [isLoading, setIsLoading] = useState(false)
-    const [form, setForm] = useState({ email: '', password: '' });
+    const [form, setForm] = useState({ email: 'test1@google.com', password: 'Abc123' });
     
     const onLogin = async () => {        
         if (form.email.length === 0 && form.password.length === 0) {
@@ -24,10 +24,9 @@ export const LoginScreen = ({ navigation }: Props) => {
         setIsLoading(true);
         const isSuccess = await login(form.email, form.password);
         setIsLoading(false);
-        console.log(isSuccess)
+        
         if (!isSuccess) {
-            Alert.alert("Error", "Invalid user")
-            //    navigation.navigate('HomeScreen');
+            Alert.alert("Error", "Usuario inválido")            
         }
     }
 

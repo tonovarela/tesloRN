@@ -33,23 +33,23 @@ export const checkToken = async () => {
 }
 
 export const authLogin = async (email: string, password: string) => {
-    email = email.toLowerCase();    
+    email = email.toLowerCase();                
     try {
-        const { data } = await tesloApi.post<AuthResponse>("/auth/login", { email, password });
+        const { data} = await tesloApi.post<AuthResponse>("/auth/login", { email, password });
         return toUserToken(data);
     } catch (error) {  
-        
+        console.log(error);
         return null;
     }
 }
 
 export const register = async (email: string, password: string, fullName: string) => {    
-    email = email.toLowerCase();
+    email = email.toLowerCase();    
     try {
         const resp = await tesloApi.post<AuthResponse>("/auth/register", { email, password, fullName });        
         return toUserToken(resp.data);
     } catch (error) {
-        
+        console.log(error);
         return null;
     }
 }

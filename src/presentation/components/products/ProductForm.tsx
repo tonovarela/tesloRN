@@ -8,37 +8,40 @@ import { CustomIcon } from '../ui/CustomIcon';
 import { GENDERS, SIZES } from '../../../config/constants/constans';
 import { CameraAdapter } from '../../../config/api/adapter/CameraAdapter';
 
-
 interface Props {
     product: Product;
     handleSubmit: () => void;
     handleChange: (field: string) => any;
+    
     setFieldValue: (field: string, value: any) => any,
     
     isSaving: boolean;
 }
 
 
-const theme = useTheme();
 
 export const ProductForm = ({ product, handleChange, handleSubmit, setFieldValue, isSaving }: Props) => {
-    const handlePhoto =async()=>{
-        const photos = await CameraAdapter.takePicture();
-        return photos;
-    
-    }
+    const theme = useTheme();    
+    const handlePhoto=  async()=>{             
+        try{
+            const photos = await CameraAdapter.getPictureFromLibrary();;                                
+            setFieldValue('images',[...product.images,...photos]);  
+        }
+        catch(error){
+            return null;
+        }  
+        // {
+        //     const picture =await takePicture();             
+        //     if (picture){   
+        //     setFieldValue('images',[...product.images,picture]);                        
+        //     }    
+        // }
+        
+}
     
     return (
         <MainLayout
-            rightAction={async()=>{
-                const photos =await handlePhoto();
-                
-                if (photos.length>0){
-                setFieldValue('images',[...product.images,photos[0]]);
-                }            
-            
-
-            }}
+            rightAction={handlePhoto}
             rightActionIcon='camera-outline'
             title={product.title} subtitle={`Precio ${product.price}`}>
             <ScrollView  >

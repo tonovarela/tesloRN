@@ -22,8 +22,9 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     user: undefined,
     register: async (email: string, password: string, fullName: string) => {
            const resp = await register(email, password, fullName);
+           console.log(resp);
            if (!resp) {
-            set({ status: AuthStatus.AUTHENTICATED, user: undefined, token: undefined });
+            set({ status: AuthStatus.UNAUTHENTICATED, user: undefined, token: undefined });
                  return false;
            }
            await StorageAdapter.setItem('token', resp.token);
@@ -32,13 +33,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     },
     logout: async () => {
-        set({ status: AuthStatus.AUTHENTICATED, user: undefined, token: undefined });
+        set({ status: AuthStatus.UNAUTHENTICATED, user: undefined, token: undefined });
         await StorageAdapter.removeItem('token');
     },
     checkStatus: async () => {
         const resp= await checkToken();        
         if (!resp){
-                 set({ status:AuthStatus.AUTHENTICATED, user: undefined, token: undefined });
+                 set({ status:AuthStatus.UNAUTHENTICATED, user: undefined, token: undefined });
                  return;
         }
         
@@ -49,7 +50,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     login: async (email: string, password: string) => {
         const resp = await authLogin(email, password);
         if (!resp) {
-            set({ status: AuthStatus.AUTHENTICATED, user: undefined, token: undefined });
+            
+            set({ status: AuthStatus.UNAUTHENTICATED, user: undefined, token: undefined });
             return false;
         }
         await StorageAdapter.setItem("token", resp.token);
